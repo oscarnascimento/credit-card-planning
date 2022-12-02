@@ -1,8 +1,10 @@
 package br.com.oscarnascimento.creditcardplanning.controller;
 
 import br.com.oscarnascimento.creditcardplanning.model.dto.CreditCardDto;
+import br.com.oscarnascimento.creditcardplanning.model.dto.PurchaseDto;
 import br.com.oscarnascimento.creditcardplanning.model.entity.CreditCard;
 import br.com.oscarnascimento.creditcardplanning.service.CreditCardService;
+import br.com.oscarnascimento.creditcardplanning.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,26 +16,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController()
-@RequestMapping("api/v1/creditcards")
-public class CreditCardController {
+@RestController
+@RequestMapping("api/v1/purchases")
+public class PurchaseController {
 
-    private final CreditCardService service;
+    private final PurchaseService service;
 
     @Autowired
-    public CreditCardController(CreditCardService service) {
+    public PurchaseController(PurchaseService service) {
         this.service = service;
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<List<CreditCardDto>> list() {
-       List<CreditCardDto> response = service.list();
+    public ResponseEntity<List<PurchaseDto>> list() {
+       List<PurchaseDto> response = service.list();
        return ResponseEntity.ok(response);
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public ResponseEntity<CreditCardDto> create(@RequestBody CreditCardDto creditCard) {
-        CreditCardDto response = service.create(creditCard);
+    public ResponseEntity<PurchaseDto> create(@RequestBody PurchaseDto purchaseDto) {
+        PurchaseDto response = service.create(purchaseDto);
         return ResponseEntity.ok(response);
     }
 
