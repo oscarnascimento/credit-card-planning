@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +16,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -27,7 +27,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "user")
+@Table(name = "user", uniqueConstraints = { @UniqueConstraint(columnNames = { "username", "email" }) })
 public class User implements Serializable, UserDetails {
 
     @Id
@@ -35,17 +35,17 @@ public class User implements Serializable, UserDetails {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column
+    @Column(nullable = false)
     private String username;
 
     @JsonIgnore
-    @Column
+    @Column(nullable = false)
     private String password;
 
     @Column
-    private Boolean enabled;
+    private Boolean enabled = true;
 
-    @Column
+    @Column(nullable = false)
     private String email;
 
     @ManyToMany(fetch = FetchType.EAGER)
